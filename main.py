@@ -34,17 +34,29 @@ def write_json_to_file(json, filename) -> None:
     with open(filename, 'w') as outfile:
         json.dump(json, outfile)
 
-
+# Il faudra faire en sorte de prendre en compte dans la 2ème version les sous-réponses qui sont stockés dans le set "in_response_to"
 def get_posts_from_json(json) -> json:
     """
         Get all posts from a json response
     :param json: Response from URL as json
     :return: Json
     """
-    return json["posts"]
+    new = {}
+    start = 0
+    for x in json["posts"]:
+        new[start] = {
+            "id": x["post"]["id"],
+            "timestamp": x["post"]["timestamp"],
+            "seconds_elapsed": x["post"]["seconds_elapsed"],
+            "question": x["post"]["comment"],
+            "reply": x["post"]["reply"]
+        }
+        start += 1
+    return new
+
 
 
 if __name__ == '__main__':
-    response = get_reponse_from_user("")
+    response = get_reponse_from_user("iampostbad")
     print("Posts : ")
     print(get_posts_from_json(response.json()))
