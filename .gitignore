@@ -1,5 +1,3 @@
-/venv
-
 # Cache files
 *.pyc
 
@@ -10,3 +8,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
+
+/venv/

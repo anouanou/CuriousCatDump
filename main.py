@@ -5,21 +5,24 @@
 
 # URL : https://curiouscat.qa/api/v2.1/profile?username=username&max_timestamp=1602894813
 
-import json,requests
+import json, requests
 from requests import Response
 
-###
-def get_reponse_from_user(username) -> Response:
+
+def get_reponse_from_user(username, timestamp=None) -> Response:
     """
         Get Curious Cat URL Response from an username
     :param username: Curious Cat's username
+    :param timestamp: Message before this timestamp
     :return: Response
     """
     PARAMS = {
         'username': username,
+        'timestamp': timestamp
     }
     url = "https://curiouscat.qa/api/v2.1/profile"
     return requests.get(url, params=PARAMS)
+
 
 def write_json_to_file(json, filename) -> None:
     """
@@ -31,16 +34,17 @@ def write_json_to_file(json, filename) -> None:
     with open(filename, 'w') as outfile:
         json.dump(json, outfile)
 
+
 def get_posts_from_json(json) -> json:
     """
         Get all posts from a json response
     :param json: Response from URL as json
     :return: Json
     """
-    return
+    return json["posts"]
 
 
 if __name__ == '__main__':
-    response = get_reponse_from_user("cestpasdechance")
-    print(response.json())
-
+    response = get_reponse_from_user("")
+    print("Posts : ")
+    print(get_posts_from_json(response.json()))
